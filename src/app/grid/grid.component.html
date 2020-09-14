@@ -1,0 +1,47 @@
+<div class="grid2" style="text-align: center;">
+
+    <div>
+        <span class="header" *ngFor="let header of header">{{header.label }}</span>
+    </div>
+
+
+    <div *ngFor="let content of content | slice:startIndex:endIndex">
+        <span class="content" *ngFor="let header of header "> {{content[header.column] }}</span>
+
+    </div>
+
+    <br>
+    <div style="text-align: center;">
+        Current page is <b>{{currentPage + 1}}</b>
+        <br>
+        <br>
+        {{startIndex + 1}} / {{endIndex}} out of {{content.length}}
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        
+        <select [(ngModel)]="defaultPageType" (change)="pageTypeChange($event.target.value)" name="defaultPage">
+            <option *ngFor="let data of pagination" [value]="data">{{data}}</option>
+        </select>
+
+    </div> 
+
+
+</div>
+
+
+<ul style="text-align: center;">
+
+    <li><button [disabled]="startIndex <= 0 ? true : false" class="btn btn-primary"
+            (click)="previous()">Previous</button></li>
+
+    <li *ngFor="let data of getArray(content.length);let i=index">
+        <a (click)="updateIndex(i)">{{i+1}}</a>
+
+    </li>
+
+
+    <li><button [disabled]="endIndex >= content.length ? true : false" class="btn btn-primary"
+            (click)="next()">Next</button></li>
+
+</ul>
